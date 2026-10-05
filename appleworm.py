@@ -50,10 +50,8 @@ def move_worm(dr, dc, dir_name):
 
     # 3. Kiểm tra ăn Táo
     if new_head == st.session_state.apple:
-        # Ăn táo: Không xóa đuôi để sâu dài ra
         st.session_state.apple = (-1, -1) # Biến mất quả táo
     else:
-        # Di chuyển bình thường: Cắt đuôi cũ
         st.session_state.worm.pop()
 
     # 4. Kiểm tra về Cổng Đích
@@ -62,12 +60,12 @@ def move_worm(dr, dc, dir_name):
 
 # Giao diện điều khiển nút bấm
 st.write("Sử dụng các nút bên dưới để điều khiển chú sâu:")
-col1, col2, col3 = st.columns([1, 2, 1])
+col1, col2, col3 = st.columns([1,2,1])
 
 with col2:
     if st.button("⬆️ Lên", use_container_width=True): move_worm(-1, 0, "UP")
 
-col_left, col_space, col_right = st.columns([1, 1, 1])
+col_left, col_space, col_right = st.columns([1,2,1])
 with col_left:
     if st.button("⬅️ Trái", use_container_width=True): move_worm(0, -1, "LEFT")
 with col_right:
@@ -79,10 +77,10 @@ with col2:
 # Trạng thái kết thúc game
 if st.session_state.game_over:
     st.error("💥 Bạn đã va chạm và thua cuộc!")
-    if st.button("Chơi lại"): reset_game()
+    if st.button("Chơi lại", key="reset_over"): reset_game()
 elif st.session_state.win:
     st.success("🎉 Xuất sắc! Chú sâu đã chui vào hố an toàn!")
-    if st.button("Chơi lại"): reset_game()
+    if st.button("Chơi lại", key="reset_win"): reset_game()
 
 # Vẽ màn hình Game
 game_grid = ""
@@ -91,17 +89,17 @@ for r in range(GRID_ROWS):
     for c in range(GRID_COLS):
         pos = (r, c)
         if pos == st.session_state.worm[0]:
-            row_str += "👀" if st.session_state.direction in ["RIGHT", "UP"] else "🦧"  # Đầu sâu
+            row_str += "👀" if st.session_state.direction in ["RIGHT", "UP"] else "🦧"
         elif pos in st.session_state.worm:
-            row_str += "🟩"  # Thân sâu
+            row_str += "🟩"
         elif pos == st.session_state.apple:
-            row_str += "🍎"  # Quả táo
+            row_str += "🍎"
         elif pos == st.session_state.portal:
-            row_str += "🕳️"  # Cổng đích màu đen
+            row_str += "🕳️"
         elif pos in WALLS:
-            row_str += "🟫"  # Địa hình đất/tường
+            row_str += "🟫"
         else:
-            row_str += "⬜"  # Khoảng trống
+            row_str += "⬜"
     game_grid += row_str + "\n"
 
 st.text(game_grid)

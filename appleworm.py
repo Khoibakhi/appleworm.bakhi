@@ -104,5 +104,5 @@ for r in range(GRID_ROWS):
             row_str += "⬜"  # Khoảng trống
     game_grid += row_str + "\n"
 
-st.code(game_grid, language="")
+st.text(game_grid)
 st.info("Ký hiệu: 🟩 Thân sâu | 👀 Đầu sâu | 🍎 Quả táo | 🟫 Đất/Tường | 🕳️ Cổng đích")
